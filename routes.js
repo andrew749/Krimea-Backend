@@ -34,7 +34,13 @@ module.exports = function(app) {
   });
 
   app.get("/user/:user_id/panic/:panic_id", function(req, res){
-    // TODO: Andrew work on this
+      var events=[];
+      Event.find(function(err,result){
+          for (x in result){
+            events.push(result[x]);
+          }
+          res.render('mapdisplay.html',events);
+      }).where('_id':req.param.panic_id);
   });
 
   var panic_router = express.Router();
