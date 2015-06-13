@@ -1,0 +1,14 @@
+{
+  "name": "krimea-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "app.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4",
+    "passport": "^0.2.2"
+  }
+}
