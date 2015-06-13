@@ -3,10 +3,11 @@ var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017');
+mongoose.connect('mongodb://localhost/krimea');
 
 mongoose.connection.once('open', function(){
   require("./models")();
+  require("./auth")(app);
   require("./routes")(app);
 });
 

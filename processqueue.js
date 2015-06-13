@@ -20,7 +20,7 @@ var parseAddressFromTweet = function(text) {
     var ADDRESS_STARTER = ADDRESS_STARTERS[i];
     
     if (text.indexOf(ADDRESS_STARTERS) > -1) {
-      var address_parsing_regex = "/"+ADDRESS_STARTER+"/";
+      var address_parsing_regex = "/"+ADDRESS_STARTER+" (\w+\/\w+)/";
     }
   }
 };
