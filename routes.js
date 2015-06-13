@@ -33,4 +33,43 @@ module.exports = function(app) {
       });
   });
 
+  app.get("/user/:user_id/panic/:panic_id", function(req, res){
+    // TODO: Andrew work on this
+  });
+
+  var panic_router = express.Router();
+  panic_router.use(passport.authenticate('local'));
+
+  panic_router.post("/", function(req, res){
+    req.user.panics.push({
+      time: new Date(req.body.time),
+      active: false
+    });
+
+    promisify(req.user, 'save')
+      .then(function(user){
+        res.send({success: 1});
+      });
+  });
+
+  panic_router.post("/:panic_id/update", function(req, res){
+    var lat = req.body.lat,
+      lon = req.body.lon;
+
+    var location = {
+      lat: req.body.lat,
+      lon: req.body.lon,
+      date: new Date()
+    };
+
+    req.user.location.push(location);
+
+    promisify(req.user, 'save')
+      .then(function(user){
+        res.send({success: 1});
+      });
+  });
+
+  app.use("/panic", panic_router);
+
 };
