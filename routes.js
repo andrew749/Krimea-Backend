@@ -35,12 +35,12 @@ module.exports = function(app) {
 
   app.get("/user/:user_id/panic/:panic_id", function(req, res){
       var events=[];
-      Event.find(function(err,result){
-          for (x in result){
-            events.push(result[x]);
-          }
+      User.find({'_id':req.params.user_id},function(err,result){
+          result.panics.forEach(function(e){
+              console.log(e);
+          });
           res.render('mapdisplay.html',events);
-      }).where('_id':req.param.panic_id);
+      });
   });
 
   var panic_router = express.Router();
