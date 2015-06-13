@@ -2,11 +2,16 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
+var bodyparser = require('body-parser');
 
-mongoose.connect('mongodb://localhost:27017');
+mongoose.connect('mongodb://localhost/krimea');
+
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: false}));
 
 mongoose.connection.once('open', function(){
   require("./models")();
+  require("./auth")(app);
   require("./routes")(app);
 });
 
