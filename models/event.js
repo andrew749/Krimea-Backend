@@ -1,6 +1,5 @@
 
 var mongoose = require("mongoose");
-
 module.exports = function(){
   var Event = {
     lat: Number,
