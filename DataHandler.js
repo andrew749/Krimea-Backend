@@ -4,8 +4,8 @@ var Event=mongoose.model('Event');
 //var testdata=new Event({lat:43.640858, lon:-79.388882,type:"homicide",decription:"test",link:"andrewcodispoti.me",time:Date()});
 //var testdata2=new Event({lat:43.640858, lon:-79.388882,type:"homicide",decription:"test",link:"andrewcodispoti.me",time:Date()});
 
-testdata.save();
-testdata2.save();
+//testdata.save();
+//testdata2.save();
 
 //call in app.js to get all events close
 function getDataForLocation(location,res){
