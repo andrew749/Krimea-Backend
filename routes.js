@@ -1,0 +1,9 @@
+
+var express = require("express");
+var mongoose = require("mongoose");
+
+module.exports = function(app) {
+  app.get("/", function(req, res){
+    res.send({message: "Hello!"});
+  });
+};
