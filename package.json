@@ -6,9 +6,12 @@
   "main": "app.js",
   "scripts": {},
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.12.4",
-    "mongoose": "^4.0.5"
+    "kue": "^0.9.3",
+    "mongoose": "^4.0.5",
+    "request": "^2.57.0",
+    "twit": "^1.1.20"
   }
 }

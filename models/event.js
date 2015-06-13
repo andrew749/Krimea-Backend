@@ -5,7 +5,7 @@ module.exports = function(){
   var Event = {
     lat: Number,
     lon: Number, 
-    type: String,
+    crimeType: String,
     description: String,
     link: String,
     time: Date,
