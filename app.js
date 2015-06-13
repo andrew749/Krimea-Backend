@@ -1,8 +1,13 @@
 
+var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 
-require("./routes")(app);
+mongoose.connect('mongodb://localhost/krimea');
+
+mongoose.connection.once('open', function(){
+  require("./routes")(app);
+});
 
 var server = app.listen(8000, function () {
 
