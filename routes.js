@@ -15,8 +15,8 @@ module.exports = function(app) {
       var locations= dataHandler.getDataForLocation(location,res);
   });
 
-  app.get("/login", passport.authenticate('local'), function(req, res){
-    res.send({success: 1, user: req.user});
+  app.get("/login", passport.authenticate('basic', {session: false}), function(req, res){
+    res.send({logged_in: 1, user: req.user});
   });
 
   app.post("/signup", function(req, res){
@@ -44,7 +44,7 @@ module.exports = function(app) {
   });
 
   var panic_router = express.Router();
-  panic_router.use(passport.authenticate('local'));
+  panic_router.use(passport.authenticate('basic', {session: false}));
 
   panic_router.post("/", function(req, res){
     req.user.panics.push({
