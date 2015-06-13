@@ -6,6 +6,8 @@ var bodyparser = require('body-parser');
 
 mongoose.connect('mongodb://localhost/krimea');
 
+//app.set('view engine', 'ejs');
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
 
