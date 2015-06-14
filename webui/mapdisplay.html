@@ -42,8 +42,10 @@
         <div id="map-canvas"></div>
         <div id="locationslist">
           <div class="list-entry">
-              <p>Time:<span id="time"> 10:00</span></p><p>Location:<span id="location"> Some Location</span></p>
+              <li ng-repeat="x in locations">
+              <p>Time:<span id="time">{{x.time}}</span></p><p>Location:<span id="location"> {{x.lat}},{{x.lon}}</span></p>
               <hr>
+              </li>
           </div>
         </div>
       </div>
