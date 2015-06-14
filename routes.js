@@ -40,7 +40,7 @@ module.exports = function(app, io) {
 
   app.get("/panic/:panic_id/locations", function(req, res){
     var locations=[];
-    promisify(User, 'find', {'panics._id':req.params.user_id})
+    promisify(User, 'find', {'panics._id':req.params.panic_id})
       .then(function(result){
         if (result.length > 0) {
           result[0].location.forEach(function(e){
