@@ -22,7 +22,8 @@ angular.module("krimea", [])
         }
         initialize();
 
-        scope.$watch("currentLocation", function(){
+        scope.$watch("currentLocation", function(newValue, oldValue){
+          if (!newValue) return;
           var position = new google.maps.LatLng(
             scope.currentLocation.lat,
             scope.currentLocation.lon);
