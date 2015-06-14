@@ -2,7 +2,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
+var server = require('http').Server(app);
 var bodyparser = require('body-parser');
+var io = require("socket.io")(server);
 
 mongoose.connect('mongodb://localhost/krimea');
 
@@ -10,14 +12,15 @@ mongoose.connect('mongodb://localhost/krimea');
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
+app.use('static',express.static('static'));
 
 mongoose.connection.once('open', function(){
   require("./models")();
   require("./auth")(app);
-  require("./routes")(app);
+  require("./routes")(app, io);
 });
 
-var server = app.listen(8000, function () {
+server.listen(8000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
