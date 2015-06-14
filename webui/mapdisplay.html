@@ -1,36 +1,45 @@
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <script src="https://maps.googleapis.com/maps/api/js"></script>
-                  <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-                <script>
-                  function initialize() {
-                    var mapCanvas = document.getElementById('map-canvas');
-                    var mapOptions = {
-                      center: new google.maps.LatLng(43.6470034,-79.3872184),
-                      zoom: 15,
-                      mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+        <script>
+            function initialize() {
+                var mapCanvas = document.getElementById('map-canvas');
+                var mapOptions = {
+                    center: new google.maps.LatLng(43.6470034,-79.3872184),
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
 
-                    var map = new google.maps.Map(mapCanvas, mapOptions);
-                          var marker = new google.maps.Marker({
-              position: mapOptions.center,
-              map: map,
-              title: 'Last Location!'
-          });
-                  }
-                  google.maps.event.addDomListener(window, 'load', initialize);
-                </script>
-                <link rel="stylesheet" href="map.css"/>
-              </head>
-              <body>
-                <div id="header">
-                    <p><img id="logo" src="../logo.png"/>Panic.io</p>
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+                var marker = new google.maps.Marker({
+                position: mapOptions.center,
+                map: map,
+                title: 'Last Location!'
+            });
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <link rel="stylesheet" href="map.css"/>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" id="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <h2 id="logoname"><img id="logo" src="../logo.png"/>Panic.io</h2>
+                    </a>
+                    
                 </div>
+            </div>
+        </nav>  
+                  
+                  
                 <div id="map-canvas"></div>
                   <div id="locationslist">
                     <div class="list-entry">
-                        <p>Time:<span id="time">10:00</span></p><p>Location:<span id="location">Some Location</span></p>
+                        <p>Time:<span id="time"> 10:00</span></p><p>Location:<span id="location"> Some Location</span></p>
                         <hr>
                     </div>
                   </div>
