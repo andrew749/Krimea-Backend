@@ -3,7 +3,7 @@ angular.module("krimea", [])
     return {
       link: function(scope, element, attrs) {
         function initialize() {
-            var mapCanvas = document.getElementById('map-canvas');
+            var mapCanvas = element.get(0);
             var mapOptions = {
                 center: new google.maps.LatLng(43.6470034,-79.3872184),
                 zoom: 15,
@@ -53,6 +53,8 @@ angular.module("krimea", [])
         }
       });
       $scope.currentLocation = $scope.locations[0];
+
+      $scope.panic = data.panic;
     });
 
     $scope.socket = io('', {query: "panic_id="+panic_id});
@@ -74,6 +76,8 @@ angular.module("krimea", [])
 
     $scope.socket.on("allclear", function(data){
       console.log("Got an all clear");
+      $scope.panic.active = false;
+      $scope.panic.time = data.time;
       $scope.$apply();
     });
   });

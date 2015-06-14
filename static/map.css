@@ -35,6 +35,7 @@
 
 #map-canvas{
     padding-top: 50%;
+    height: 600px;
 }
 #locationslist{
     height: 600px;
@@ -49,6 +50,21 @@
 .list-entry {
     height: 100%;
 }
+
+.status-bar {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.status-bar-success {
+    color: #5cb85c;
+}
+
+.status-bar-panic {
+    color: #f0ad4e;
+}
+
 #logo{
     width: 50px;
     height:50px;

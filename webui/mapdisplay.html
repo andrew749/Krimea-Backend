@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="/static/map.css"/>
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top scroll-me" id="menu-section" >
+        <div class="navbar navbar-inverse scroll-me" id="menu-section" >
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,6 +45,12 @@
         </div>
 
       <div ng-controller="MapController" id="MapController">
+        <div class="status-bar status-bar-success" ng-if="panic.active==false">
+            <strong>All clear!</strong> The user sent the all-clear on {{panic.time}}
+        </div>
+        <div class="status-bar status-bar-panic" ng-if="panic.active==true">
+            The user pressed the panic button at {{panic.time}}
+        </div>
         <div class="row">
             <div id="map-canvas" class="col-sm-9" map-canvas></div>
             <div id="locationslist" class="col-sm-3">

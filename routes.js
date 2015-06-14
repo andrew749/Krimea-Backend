@@ -47,7 +47,10 @@ module.exports = function(app, io) {
             locations.push(e);
           });
         }
-        res.send({locations: locations});
+        res.send({
+          locations: locations,
+          panic: result[0].panics.id(req.params.panic_id)
+        });
       })
       .catch(function(err){
         console.log(err);
@@ -59,7 +62,7 @@ module.exports = function(app, io) {
 
   panic_router.post("/", function(req, res){
     req.user.panics.push({
-      time: new Date(req.body.time),
+      time: new Date(),
       active: true
     });
     // get panic id
@@ -106,20 +109,14 @@ module.exports = function(app, io) {
   });
 
   panic_router.post("/:panic_id/allclear", function(req, res){
-    var panicIndex = null;
 
-    req.user.panics.forEach(function(_panic, index){
-      if (_panic._id == req.params.panic_id) {
-        panicIndex = index;
-      }
-    });
-
-    req.user.panics[panicIndex].active = false;
+    req.user.panics.id(req.params.panic_id).active = false;
+    req.user.panics.id(req.params.panic_id).time = new Date();
 
     promisify(req.user, 'save')
       .then(function(user){
         res.send({success: 1});
-        io.to(req.params.panic_id).emit('allclear');
+        io.to(req.params.panic_id).emit('allclear', req.user.panics.id(req.params.panic_id));
       });
 
   });
