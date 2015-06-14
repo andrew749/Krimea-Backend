@@ -46,17 +46,17 @@
 
       <div ng-controller="MapController" id="MapController">
         <div class="status-bar status-bar-success" ng-if="panic.active==false">
-            <strong>All clear!</strong> The user sent the all-clear on {{panic.time}}
+            <strong>All clear!</strong> The user sent the all-clear on {{panic.time | date : 'mediumTime'}}
         </div>
         <div class="status-bar status-bar-panic" ng-if="panic.active==true">
-            The user pressed the panic button at {{panic.time}}
+            The user pressed the panic button at {{panic.time | date : 'mediumTime'}}
         </div>
         <div class="row">
             <div id="map-canvas" class="col-sm-9" map-canvas></div>
             <div id="locationslist" class="col-sm-3">
               <div class="list-entry">
                   <div ng-repeat="x in locations" ng-mouseover="$parent.currentLocation=x;" ng-class="{'active': $parent.currentLocation._id == x._id }">
-                      <p>Time:<span id="time">{{x.time}}</span></p><p>Location:<span id="location"> {{x.lat}},{{x.lon}}</span></p>
+                      <p>Time:&nbsp;<span id="time">{{x.time | date : 'mediumTime'}}</span></p><p>Location:<span id="location"> {{x.lat}},{{x.lon}}</span></p>
                       <hr>
                   </div>
               </div>
