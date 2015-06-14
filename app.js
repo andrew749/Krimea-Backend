@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost/krimea');
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
-app.use('static',express.static('static'));
+app.use('/static', express.static(__dirname + '/static'));
 
 mongoose.connection.once('open', function(){
   require("./models")();

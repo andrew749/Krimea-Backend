@@ -6,6 +6,7 @@ var dataHandler=require("./DataHandler.js");
 var passport = require("passport");
 var bcrypt = require("bcrypt");
 var promisify = require("./promisify");
+var assert = require("assert");
 
 module.exports = function(app, io) {
   app.get("/", function(req, res){
@@ -33,11 +34,11 @@ module.exports = function(app, io) {
       });
   });
 
-  app.get("/user/:user_id/panic/:panic_id", function(req, res){
+  app.get("/panic/:panic_id", function(req, res){
     res.sendFile(__dirname + '/webui/mapdisplay.html');
   });
 
-  app.get("/user/:user_id/panic/:panic_id/locations", function(req, res){
+  app.get("/panic/:panic_id/locations", function(req, res){
     var locations=[];
     promisify(User, 'find', {'_id':req.params.user_id})
       .then(function(result){
@@ -57,10 +58,19 @@ module.exports = function(app, io) {
       time: new Date(req.body.time),
       active: false
     });
+    // get panic id
+    var panic = null;
+
+    req.user.panics.forEach(function(_panic){
+      if (_panic.isNew) {
+        panic = _panic;
+      }
+    });
+    var id = panic._id;
 
     promisify(req.user, 'save')
       .then(function(user){
-        res.send({success: 1});
+        res.send({success: 1, _id: id});
       });
   });
 
@@ -83,5 +93,9 @@ module.exports = function(app, io) {
   });
 
   app.use("/panic", panic_router);
+
+  io.on('connection', function(socket){
+    console.log(socket.handshake.query.panic_id);
+  });
 
 };
