@@ -10,16 +10,15 @@
     padding-top: 20px;
     font-family: 'Montserrat', sans-serif;
 }
-#navbar {
-    background-color: white;
-}
-#logoname, a {
-    color: black;
+#logoname {
+    margin-top: -15px;
+    color: white;
     text-decoration: none;
 }
 
 #map-canvas{
-    padding-top: 70%;
+    margin: 52px 0px 0px 0px;
+    height: 500px;
     width: 100%;
 }
 #locationslist{
@@ -33,6 +32,10 @@
     height:50px;
     vertical-align: middle;
     margin-right: 10px;
+}
+#timelocation {
+    text-align: center;
+    font-size: 30px;
 }
 body{
     height:100%;
