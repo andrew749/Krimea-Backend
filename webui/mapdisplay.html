@@ -49,7 +49,7 @@
             <div id="map-canvas" class="col-sm-9" map-canvas></div>
             <div id="locationslist" class="col-sm-3">
               <div class="list-entry">
-                  <li ng-repeat="x in locations">
+                  <li ng-repeat="x in locations" ng-mouseover="$parent.currentLocation=x;" ng-class="{'active': $parent.currentLocation._id == x._id }">
                       <p>Time:<span id="time">{{x.time}}</span></p><p>Location:<span id="location"> {{x.lat}},{{x.lon}}</span></p>
                       <hr>
                   </li>

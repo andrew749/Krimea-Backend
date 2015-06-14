@@ -90,6 +90,14 @@ module.exports = function(app, io) {
     console.log(lat,lon);
     req.user.location.push(location);
 
+    var location = null;
+
+    req.user.location.forEach(function(_location){
+      if (_location.isNew) {
+        location = _location;
+      }
+    });
+
     promisify(req.user, 'save')
       .then(function(user){
         res.send({success: 1});
