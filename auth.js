@@ -1,11 +1,11 @@
 
 var passport = require("passport"),
-  LocalStrategy = require('passport-local').Strategy;
+  BasicStrategy = require('passport-http').BasicStrategy;
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
 var bcrypt = require("bcrypt");
 
-passport.use(new LocalStrategy(
+passport.use(new BasicStrategy(
   function(username, password, done) {
     User.findOne({ email: username }, function (err, user) {
       if (err) { return done(err); }

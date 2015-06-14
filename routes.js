@@ -7,7 +7,7 @@ var passport = require("passport");
 var bcrypt = require("bcrypt");
 var promisify = require("./promisify");
 
-module.exports = function(app) {
+module.exports = function(app, io) {
   app.get("/", function(req, res){
       console.log("got request");
       console.log(req.query.lat," ",req.query.lon);
@@ -15,8 +15,8 @@ module.exports = function(app) {
       var locations= dataHandler.getDataForLocation(location,res);
   });
 
-  app.get("/login", passport.authenticate('local'), function(req, res){
-    res.send({success: 1, user: req.user});
+  app.get("/login", passport.authenticate('basic', {session: false}), function(req, res){
+    res.send({logged_in: 1, user: req.user});
   });
 
   app.post("/signup", function(req, res){
@@ -32,5 +32,50 @@ module.exports = function(app) {
         res.send({success: 1, user: user._id});
       });
   });
+
+  app.get("/user/:user_id/panic/:panic_id", function(req, res){
+      var events=[];
+      User.find({'_id':req.params.user_id},function(err,result){
+          result.panics.forEach(function(e){
+              console.log(e);
+          });
+          res.render('mapdisplay.html',events);
+      });
+  });
+
+  var panic_router = express.Router();
+  panic_router.use(passport.authenticate('basic', {session: false}));
+
+  panic_router.post("/", function(req, res){
+    req.user.panics.push({
+      time: new Date(req.body.time),
+      active: false
+    });
+
+    promisify(req.user, 'save')
+      .then(function(user){
+        res.send({success: 1});
+      });
+  });
+
+  panic_router.post("/:panic_id/update", function(req, res){
+    var lat = req.body.lat,
+      lon = req.body.lon;
+
+    var location = {
+      lat: req.body.lat,
+      lon: req.body.lon,
+      date: new Date()
+    };
+
+    req.user.location.push(location);
+
+    promisify(req.user, 'save')
+      .then(function(user){
+        res.send({success: 1});
+      });
+  });
+
+  app.use("/panic", panic_router);
 
 };
