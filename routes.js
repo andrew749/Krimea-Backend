@@ -7,7 +7,7 @@ var passport = require("passport");
 var bcrypt = require("bcrypt");
 var promisify = require("./promisify");
 
-module.exports = function(app) {
+module.exports = function(app, io) {
   app.get("/", function(req, res){
       console.log("got request");
       console.log(req.query.lat," ",req.query.lon);
