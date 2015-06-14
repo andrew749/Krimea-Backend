@@ -6,10 +6,12 @@ angular.module("krimea", [])
 
     $scope.locations = [];
 
-    $http.get("")
+    $http.get(url + "/locations").success(function(data){
+      $scope.locations = data.locations.slice(0); // Copies array
+    });
 
     $scope.socket = io('', {query: "panic_id="+panic_id});
     $scope.socket.on("newlocation", function(data){
-      $scope.locations.
+      $scope.locations.push(data.location);
     });
   });

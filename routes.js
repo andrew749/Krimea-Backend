@@ -34,14 +34,18 @@ module.exports = function(app, io) {
   });
 
   app.get("/user/:user_id/panic/:panic_id", function(req, res){
-      var locations=[];
-      console.log("entering function");
-      User.find({'_id':req.params.user_id},function(err,result){
-          console.log(result);
-          result[0].location.forEach(function(e){
-            locations.push(e);
-          });
-          res.render('mapdisplay.html',locations);
+    res.sendFile(__dirname + '/webui/mapdisplay.html');
+  });
+
+  app.get("/user/:user_id/panic/:panic_id/locations", function(req, res){
+    var locations=[];
+    promisify(User, 'find', {'_id':req.params.user_id})
+      .then(function(result){
+        console.log(result);
+        result[0].location.forEach(function(e){
+          locations.push(e);
+        });
+        res.send({locations: locations});
       });
   });
 
