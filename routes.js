@@ -85,7 +85,7 @@ module.exports = function(app, io) {
     var location = {
       lat: req.body.lat,
       lon: req.body.lon,
-      date: new Date()
+      time: new Date()
     };
     console.log(lat,lon);
     req.user.location.push(location);
