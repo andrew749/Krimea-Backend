@@ -40,7 +40,7 @@ module.exports = function(app, io) {
 
   app.get("/panic/:panic_id/locations", function(req, res){
     var locations=[];
-    promisify(User, 'find', {'_id':req.params.user_id})
+    promisify(User, 'find', {'params._id':req.params.user_id})
       .then(function(result){
         if (result.length > 0) {
           result[0].location.forEach(function(e){
@@ -60,7 +60,7 @@ module.exports = function(app, io) {
   panic_router.post("/", function(req, res){
     req.user.panics.push({
       time: new Date(req.body.time),
-      active: false
+      active: true
     });
     // get panic id
     var panic = null;
@@ -95,6 +95,25 @@ module.exports = function(app, io) {
         res.send({success: 1});
         io.to(req.params.panic_id).emit('newlocation', {location: location});
       });
+  });
+
+  panic_router.post("/:panic_id/allclear", function(req, res){
+    var panicIndex = null;
+
+    req.user.panics.forEach(function(_panic, index){
+      if (_panic._id == req.params.panic_id) {
+        panicIndex = index;
+      }
+    });
+
+    req.user.panics[panicIndex].active = false;
+
+    promisify(req.user, 'save')
+      .then(function(user){
+        res.send({success: 1});
+        io.to(req.params.panic_id).emit('allclear');
+      });
+
   });
 
   app.use("/panic", panic_router);

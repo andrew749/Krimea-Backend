@@ -13,5 +13,10 @@ angular.module("krimea", [])
     $scope.socket = io('', {query: "panic_id="+panic_id});
     $scope.socket.on("newlocation", function(data){
       $scope.locations.push(data.location);
+      console.log("Got a new location");
+    });
+
+    $scope.socket.on("allclear", function(data){
+      console.log("Got an all clear");
     });
   });
