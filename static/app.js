@@ -69,9 +69,11 @@ angular.module("krimea", [])
       });
       console.log("Got a new location");
       $scope.currentLocation = data.location;
+      $scope.$apply();
     });
 
     $scope.socket.on("allclear", function(data){
       console.log("Got an all clear");
+      $scope.$apply();
     });
   });
