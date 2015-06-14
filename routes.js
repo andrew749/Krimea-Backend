@@ -93,6 +93,7 @@ module.exports = function(app, io) {
     promisify(req.user, 'save')
       .then(function(user){
         res.send({success: 1});
+        io.to(req.params.panic_id).emit('newlocation', {location: location});
       });
   });
 
