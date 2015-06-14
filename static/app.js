@@ -1,6 +1,6 @@
 angular.module("krimea", [])
   .controller("MapController", function($scope, $http){
-    var url = window.location.href;
+    var url = window.location.href.split("#")[0];
     urlcomponents = url.split("/");
     var panic_id = urlcomponents[urlcomponents.length - 1];
 

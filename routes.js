@@ -42,11 +42,15 @@ module.exports = function(app, io) {
     var locations=[];
     promisify(User, 'find', {'_id':req.params.user_id})
       .then(function(result){
-        console.log(result);
-        result[0].location.forEach(function(e){
-          locations.push(e);
-        });
+        if (result.length > 0) {
+          result[0].location.forEach(function(e){
+            locations.push(e);
+          });
+        }
         res.send({locations: locations});
+      })
+      .catch(function(err){
+        console.log(err);
       });
   });
 
@@ -95,7 +99,8 @@ module.exports = function(app, io) {
   app.use("/panic", panic_router);
 
   io.on('connection', function(socket){
-    console.log(socket.handshake.query.panic_id);
+
+    socket.join(socket.handshake.query.panic_id);
   });
 
 };
