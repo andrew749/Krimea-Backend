@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="krimea">
     <head>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -44,7 +44,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">
-                        <h2 id="logoname"><img id="logo" src="../logo.png"/>Panic.io</h2>
+                        <h2 id="logoname"><img id="logo" src="/static/logo.png"/>Panic.io</h2>
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
@@ -58,13 +58,14 @@
             </div>
         </div>
                   
-                  
-                <div id="map-canvas"></div>
-                  <div id="locationslist">
-                    <div class="list-entry">
-                        <p id="timelocation">Time:<span id="time"> 10:00</span> Location:<span id="location"> Some Location</span></p>
-                        <hr>
-                    </div>
-                  </div>
-              </body>
-            </html>
+      <div ng-controller="MapController">            
+        <div id="map-canvas"></div>
+        <div id="locationslist">
+          <div class="list-entry">
+              <p id="timelocation">Time:<span id="time"> 10:00</span></p><p>Location:<span id="location"> Some Location</span></p>
+              <hr>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

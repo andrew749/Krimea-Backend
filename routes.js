@@ -6,6 +6,7 @@ var dataHandler=require("./DataHandler.js");
 var passport = require("passport");
 var bcrypt = require("bcrypt");
 var promisify = require("./promisify");
+var assert = require("assert");
 
 module.exports = function(app, io) {
   app.get("/", function(req, res){
@@ -33,13 +34,23 @@ module.exports = function(app, io) {
       });
   });
 
-  app.get("/user/:user_id/panic/:panic_id", function(req, res){
-      var events=[];
-      User.find({'_id':req.params.user_id},function(err,result){
-          result.panics.forEach(function(e){
-              console.log(e);
+  app.get("/panic/:panic_id", function(req, res){
+    res.sendFile(__dirname + '/webui/mapdisplay.html');
+  });
+
+  app.get("/panic/:panic_id/locations", function(req, res){
+    var locations=[];
+    promisify(User, 'find', {'_id':req.params.user_id})
+      .then(function(result){
+        if (result.length > 0) {
+          result[0].location.forEach(function(e){
+            locations.push(e);
           });
-          res.render('mapdisplay.html',events);
+        }
+        res.send({locations: locations});
+      })
+      .catch(function(err){
+        console.log(err);
       });
   });
 
@@ -51,10 +62,19 @@ module.exports = function(app, io) {
       time: new Date(req.body.time),
       active: false
     });
+    // get panic id
+    var panic = null;
+
+    req.user.panics.forEach(function(_panic){
+      if (_panic.isNew) {
+        panic = _panic;
+      }
+    });
+    var id = panic._id;
 
     promisify(req.user, 'save')
       .then(function(user){
-        res.send({success: 1});
+        res.send({success: 1, _id: id});
       });
   });
 
@@ -67,15 +87,21 @@ module.exports = function(app, io) {
       lon: req.body.lon,
       date: new Date()
     };
-
+    console.log(lat,lon);
     req.user.location.push(location);
 
     promisify(req.user, 'save')
       .then(function(user){
         res.send({success: 1});
+        io.to(req.params.panic_id).emit('newlocation', {location: location});
       });
   });
 
   app.use("/panic", panic_router);
+
+  io.on('connection', function(socket){
+
+    socket.join(socket.handshake.query.panic_id);
+  });
 
 };
