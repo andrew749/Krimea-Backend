@@ -34,12 +34,14 @@ module.exports = function(app) {
   });
 
   app.get("/user/:user_id/panic/:panic_id", function(req, res){
-      var events=[];
+      var locations=[];
+      console.log("entering function");
       User.find({'_id':req.params.user_id},function(err,result){
-          result.panics.forEach(function(e){
-              console.log(e);
+          console.log(result);
+          result[0].location.forEach(function(e){
+            locations.push(e);
           });
-          res.render('mapdisplay.html',events);
+          res.render('mapdisplay.html',locations);
       });
   });
 
@@ -67,7 +69,7 @@ module.exports = function(app) {
       lon: req.body.lon,
       date: new Date()
     };
-
+    console.log(lat,lon);
     req.user.location.push(location);
 
     promisify(req.user, 'save')
