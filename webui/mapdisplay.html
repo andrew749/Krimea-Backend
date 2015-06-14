@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="krimea">
     <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
@@ -27,22 +35,34 @@
         <link rel="stylesheet" href="map.css"/>
     </head>
     <body>
-        <nav class="navbar navbar-default" id="navbar">
-            <div class="container-fluid">
+        <div class="navbar navbar-inverse navbar-fixed-top scroll-me" id="menu-section" >
+            <div class="container">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a class="navbar-brand" href="#">
                         <h2 id="logoname"><img id="logo" src="/static/logo.png"/>Panic.io</h2>
                     </a>
-                    
                 </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="mapdisplay.html">HOME</a></li>
+                        <li><a href="about.html">ABOUT</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </div>
+
             </div>
-        </nav>  
+        </div>
                   
       <div ng-controller="MapController">            
         <div id="map-canvas"></div>
         <div id="locationslist">
           <div class="list-entry">
-              <p>Time:<span id="time"> 10:00</span></p><p>Location:<span id="location"> Some Location</span></p>
+              <p id="timelocation">Time:<span id="time"> 10:00</span></p><p>Location:<span id="location"> Some Location</span></p>
               <hr>
           </div>
         </div>
